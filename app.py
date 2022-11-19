@@ -1,12 +1,4 @@
 import streamlit as st
-import webbrowser
-from PIL import Image, ImageOps
-import numpy as np
-import webbrowser
-import tempfile
-import os
-import shutil
-import time
 
 
 st.markdown("<h1 style='text-align: center; color: #9ACD32;'>사용자 정보 기반 메뉴 추천</h1>", unsafe_allow_html=True)
@@ -40,7 +32,6 @@ veggies=st.selectbox(
 st.write('선택하신 결과 :',reason,'/',fav,'/',fruit,'/',pay,'/',veggies)
 
 import pandas as pd
-from scipy import spatial
 import numpy as np
 
 data=pd.read_csv('food1119.csv')
