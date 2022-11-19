@@ -1,7 +1,7 @@
 import streamlit as st
 
 
-st.markdown("<h1 style='text-align: center; color: #0000FF;'>사용자 정보 기반 메뉴 추천</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center; color: #008080;'>사용자 정보 기반 메뉴 추천</h1>", unsafe_allow_html=True)
 
 st.markdown("#### 안녕하세요, 팀25의 '오늘 뭐먹지'입니다.\
             <br>사용자 정보를 기반으로 메뉴를 추천해드립니다!", unsafe_allow_html=True)
