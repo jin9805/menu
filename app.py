@@ -152,8 +152,8 @@ elif veggies=="많이섭취한다":
 user_similarity_scores=df.dot(a) / (np.linalg.norm(df,axis=1)*np.linalg.norm(a))
 best_similarity=user_similarity_scores.idxmax()
 result=data2.iloc[best_similarity]['result']
-st.markdown("<h1 style='text-align: center; color: # 9ACD32;'>오늘의 추천 메뉴 입니다</h1>", unsafe_allow_html=True)
-st.markdown("##### '{}\'입니다.".format(result))
+st.markdown("<h1 style='text-align: center; color: #808000;'>-----------------</h1>", unsafe_allow_html=True)
+st.markdown("##### 오늘의 추천메뉴는 \'{}\'입니다.".format(result))
 
  
      
