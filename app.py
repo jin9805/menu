@@ -45,7 +45,7 @@ def main():
 
 	st.title("Simple Login App")
 
-	menu = ["Home","Login","SignUp"]
+	menu = ["Home","SignUp","Login"]
 	choice = st.sidebar.selectbox("Menu",menu)
 
 	if choice == "Home":
@@ -85,7 +85,7 @@ def main():
 
 
 	elif choice == "SignUp":
-		st.subheader("Create New Account")
+		st.subheader("회원 가입에 필요한 Username과 Password를 ")
 		new_user = st.text_input("Username")
 		new_password = st.text_input("Password",type='password')
 
