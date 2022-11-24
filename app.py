@@ -43,7 +43,7 @@ def view_all_users():
 def main():
 	"""Simple Login App"""
 
-	st.title("o_오늘_M_뭐_M_먹지")
+	st.title("O_오늘_M_뭐_M_먹지")
 
 	menu = ["Home","SignUp","Login"]
 	choice = st.sidebar.selectbox("Menu",menu)
