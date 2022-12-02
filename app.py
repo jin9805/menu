@@ -245,8 +245,6 @@ if reason != '선택해주세요' or fav != '선택해주세요' or fruit != '�
                         result = np.append(result, data2.iloc[best_similarity]['result'])
                         score = np.append(score,round((similarity_score*100),2))
 
-
-
 st.markdown("<h1 style='text-align: center; color: #808000;'>-----------------</h1>", unsafe_allow_html=True)
 
 if st.button('결과 전송'):
