@@ -250,5 +250,7 @@ st.markdown("<h1 style='text-align: center; color: #808000;'>-----------------</
 if st.button('결과 전송'):
     for a in range(len(result)):
         st.write(f'##### 오늘의 {a+1}번째 추천메뉴는 \'{result[a]}\'입니다. 관련성은 {score[a]}%입니다.')
+    if len(result) == 0:
+        st.write("입력하지 않은 요소가 있습니다.")
 else:
     st.write('##### 오늘의 추천메뉴를 계산하는 중입니다.')
