@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from scipy.stats import rankdata
+#from scipy.stats import rankdata
 
 # Security
 #passlib,hashlib,bcrypt,scrypt
