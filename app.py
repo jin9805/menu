@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-
+from scipy.stats import rankdata
 
 # Security
 #passlib,hashlib,bcrypt,scrypt
@@ -247,10 +247,18 @@ if reason != '선택해주세요' or fav != '선택해주세요' or fruit != '�
 
 st.markdown("<h1 style='text-align: center; color: #808000;'>-----------------</h1>", unsafe_allow_html=True)
 
+result_s = []
+score_s = []
+
+for a in range(len(result)):
+    if result[a] not in result_s:
+        result_s.append(result[a])
+        score_s.append(score[a])
+
 if st.button('결과 전송'):
-    for a in range(len(result)):
-        st.write(f'##### 오늘의 {a+1}번째 추천메뉴는 \'{result[a]}\'입니다. 관련성은 {score[a]}%입니다.')
-    if len(result) == 0:
+    for a in range(len(result_s)):
+        st.write(f'##### 오늘의 {a+1}번째 추천메뉴는 \'{result_s[a]}\'입니다. 관련성은 {score_s[a]}%입니다.')
+    if len(result_s) == 0:
         st.write("입력하지 않은 요소가 있습니다.")
 else:
     st.write('##### 오늘의 추천메뉴를 계산하는 중입니다.')
