@@ -105,25 +105,25 @@ st.markdown("#### 안녕하세요, 팀25의 '오늘 뭐먹지'입니다.\
             <br>사용자 정보를 기반으로 메뉴를 추천해드립니다!", unsafe_allow_html=True)
 
 reason=st.multiselect(
-    '음식을 선택하는 이유를 선택해주세요',
+    '음식을 선택하는 이유를 선택해주세요(복수선택 가능)',
     ('스트레스','지루함','우울함','배고픔','게으름','날씨','행복','여가생활','해당없음')
     )
     
 fav=st.multiselect(
-    '좋아하는 음식 종류를 선택해주세요',
+    '좋아하는 음식 종류를 선택해주세요(복수선택 가능)',
     ('이탈리안/양식','아시안','중국음식','패스트푸드','한식','베이커리/스낵류','건강식','일식')
     )
 
 fruit=st.multiselect(
-    '과일 섭취량을 선택해주세요',
+    '과일 섭취량을 선택해주세요(복수선택 가능)',
     ('전혀섭취하지않는다','섭취하지않는다','보통이다','섭취한다','많이섭취한다')
     )
 pay=st.multiselect(
-    '음식에 지불하는/지불할 비용을 선택해주세요',
+    '음식에 지불하는/지불할 비용을 선택해주세요(복수선택 가능)',
     ('5천원미만','5천원~1만원','1만원~2만원','2만원~3만원','3만원~4만원','4만원이상')
     )   
 veggies=st.multiselect(
-    '야채 섭취량을 선택해주세요',
+    '야채 섭취량을 선택해주세요(복수선택 가능)',
     ('전혀섭취하지않는다','섭취하지않는다','보통이다','섭취한다','많이섭취한다')
 )
 
@@ -224,8 +224,15 @@ for va in range(l_veggies):
     elif veggies[va]=="많이섭취한다":
         veggies[va] = 5
 
+def second_largest_number(arr):
+    unique_nums = set(arr)
+    sorted_nums = sorted(unique_nums, reverse=True)
+    return sorted_nums[1]
+
 result = np.array([])
+result2 = np.array([])
 score = np.array([])
+score2 = np.array([])
 if reason != '선택해주세요' or fav != '선택해주세요' or fruit != '선택해주세요' or pay != '선택해주세요' or veggies != '선택해주세요':
     for a in range(l_reason):
         for b in range(l_fav):
@@ -238,27 +245,56 @@ if reason != '선택해주세요' or fav != '선택해주세요' or fruit != '�
                         al.append(fruit[c])
                         al.append(pay[d])
                         al.append(veggies[e])
-                        
                         user_similarity_scores = df.dot(al) / (np.linalg.norm(df,axis=1)*np.linalg.norm(al))
                         best_similarity=user_similarity_scores.idxmax()
                         similarity_score = user_similarity_scores[best_similarity]
                         result = np.append(result, data2.iloc[best_similarity]['result'])
                         score = np.append(score,round((similarity_score*100),2))
+                        user_similarity_scores[best_similarity] = 0.001
+                        second_similarity = user_similarity_scores.idxmax()
+                        similarity_score_s = second_largest_number(user_similarity_scores)
+                        result2 = np.append(result2, data2.iloc[second_similarity]['result'])
+                        score2 = np.append(score2,round((similarity_score_s*100),2))
 
 st.markdown("<h1 style='text-align: center; color: #808000;'>-----------------</h1>", unsafe_allow_html=True)
 
 result_s = []
+result_s2 = []
 score_s = []
+score_s2 = []
 
 for a in range(len(result)):
     if result[a] not in result_s:
         result_s.append(result[a])
         score_s.append(score[a])
 
+for a in range(len(result2)):
+    if result2[a] not in result_s:
+        if result2[a] not in result_s2:
+            result_s2.append(result2[a])
+            score_s2.append(score2[a])
+
 if st.button('결과 전송'):
-    for a in range(len(result_s)):
-        st.write(f'##### 오늘의 {a+1}번째 추천메뉴는 \'{result_s[a]}\'입니다. 관련성은 {score_s[a]}%입니다.')
     if len(result_s) == 0:
-        st.write("입력하지 않은 요소가 있습니다.")
+        st.markdown("<h5 style='text-align: center;'>입력하지 않은 요소가 있습니다.</h3>", unsafe_allow_html=True)
+    else:
+        for a in range(len(result_s)):
+            st.markdown(f"<h5>오늘의 {a+1}번째 추천메뉴는 \'{result_s[a]}\'입니다. 관련성은 {round((score_s[a]-90)*10-0.1,2)}%입니다.</h3>", unsafe_allow_html=True)
+        st.markdown("<h1 style='text-align: center; color: #808000;'>-----------------</h1>", unsafe_allow_html=True)
+        st.markdown("<h1></h1>", unsafe_allow_html=True)
+        st.markdown("<h5>결과가 만족스럽지 않나요? 아래의 버튼을 누르시면 다른 추천결과도 보여드립니다.</h3>", unsafe_allow_html=True)
+        st.markdown("<h1></h1>", unsafe_allow_html=True)
 else:
-    st.write('##### 오늘의 추천메뉴를 계산하는 중입니다.')
+    st.markdown("<h5 style='text-align: center;'>오늘의 추천메뉴를 계산하는 중입니다.</h3>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center; color: #808000;'>-----------------</h1>", unsafe_allow_html=True)
+    st.markdown("<h1></h1>", unsafe_allow_html=True)
+
+if st.button('추가 추천'):
+    if len(result_s2) == 0:
+        st.markdown("<h5 style='text-align: center;'>입력하지 않은 요소가 있습니다.</h3>", unsafe_allow_html=True)
+    else:
+        st.markdown(f"<h5>이전에 추천드렸던 메뉴는 \'{result_s}\'입니다.</h3>", unsafe_allow_html=True)
+        for a in range(len(result_s2)):
+            st.markdown(f"<h5>추가로 추천드리는 {a+1}번째 메뉴는 \'{result_s2[a]}\'입니다. 관련성은 {round((score_s2[a]-90)*10-0.1,2)}%입니다.</h3>", unsafe_allow_html=True)
+else:
+    st.markdown("<h1></h1>", unsafe_allow_html=True)
